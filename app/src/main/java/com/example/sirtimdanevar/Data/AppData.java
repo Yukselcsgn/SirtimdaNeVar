@@ -2,6 +2,7 @@ package com.example.sirtimdanevar.Data;
 
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.example.sirtimdanevar.Constants.MyConstants;
 import com.example.sirtimdanevar.Database.RoomDB;
@@ -153,9 +154,18 @@ public class AppData extends Application {
 
     public void persistDataByCategory(String category, Boolean onlyDelete){
         try {
-            List<Items>
+            List<Items> list=deleteAndGetListByCategory(category,onlyDelete);
+            if (!onlyDelete){
+                for (Items items:list){
+                    database.mainDao().saveItem(items);
+                }
+                Toast.makeText(context, category+"Reset Successfully", Toast.LENGTH_SHORT).show( );
+            }else{
+                Toast.makeText(context, category+"Reset Successfully", Toast.LENGTH_SHORT).show( );
+            }
         }catch (Exception ex){
-
+            ex.printStackTrace();
+            Toast.makeText(context, "Something Went Wrong", Toast.LENGTH_SHORT).show( );
         }
     }
 
